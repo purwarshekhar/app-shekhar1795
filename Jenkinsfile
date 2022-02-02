@@ -10,10 +10,7 @@ pipeline {
   options {
 
     timestamps()
-
-    //Set a timeout period for the Pipeline run, after which Jenkins should abort the Pipeline
-    timeout(time: 1, unit: 'HOURS')
-
+  
     buildDiscarder(logRotator(
       // number of build logs to keep
       numToKeepStr: '10',
@@ -33,7 +30,7 @@ pipeline {
        
        steps{
           echo "Start deplying deplyment.yaml file"
-          powershell "(Get-Content deployment.yaml).replace('[BranchName]','${BRANCH_NAME}') | Set-Content deployment.yaml"
+          powershell '''(Get-Content deployment.yaml).replace("[BranchName]","${BRANCH_NAME}") | Set-Content deployment.yaml'''
            bat "kubectl apply -f deployment.yaml"
           echo "Start deplying serice.yaml file"
           bat "kubectl apply -f service.yaml"
