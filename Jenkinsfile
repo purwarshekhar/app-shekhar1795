@@ -34,7 +34,7 @@ pipeline {
        steps{
           echo "Start deplying deplyment.yaml file"
           bat "(Get-Content deployment.yaml).replace('[BranchName]', ${BRANCH_NAME}) | Set-Content deployment.yaml"
-          bat "kubectl apply -f deployment.yaml"
+          powershell "kubectl apply -f deployment.yaml"
           echo "Start deplying serice.yaml file"
           bat "kubectl apply -f service.yaml"
       }
